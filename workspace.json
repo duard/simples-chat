@@ -1,4 +1,8 @@
 {
   "version": 2,
-  "projects": {}
+  "projects": {
+    "api-chat-class": "apps/api-chat-class",
+    "api-core": "libs/api/core",
+    "bots-api-whatsapp": "apps/bots/api-whatsapp"
+  }
 }

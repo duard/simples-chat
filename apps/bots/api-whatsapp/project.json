@@ -1,0 +1,52 @@
+{
+  "root": "apps/bots/api-whatsapp",
+  "sourceRoot": "apps/bots/api-whatsapp/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/bots/api-whatsapp",
+        "main": "apps/bots/api-whatsapp/src/main.ts",
+        "tsConfig": "apps/bots/api-whatsapp/tsconfig.app.json",
+        "assets": ["apps/bots/api-whatsapp/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/bots/api-whatsapp/src/environments/environment.ts",
+              "with": "apps/bots/api-whatsapp/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "bots-api-whatsapp:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/bots/api-whatsapp/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/bots/api-whatsapp"],
+      "options": {
+        "jestConfig": "apps/bots/api-whatsapp/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
