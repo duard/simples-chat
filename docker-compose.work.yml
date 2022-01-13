@@ -10,7 +10,7 @@ services:
       # context: ./apps/api-chat-class
       # dockerfile: Dockerfile
       context: .
-      dockerfile: Dockerfile
+      dockerfile: /home/duard/zdev/chatclass-org/apps/api-chat-class/Dockerfile
       target: development
     # env_file:
     #  - .env.dev .env.dev
