@@ -17,7 +17,7 @@ async function bootstrap() {
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  const port = config.get('port') || 3333;
+  const port = config.get('api_chatclass.port') || 3333;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on [${config.get('NODE_ENV')}] : http://localhost:${port}/${globalPrefix}`

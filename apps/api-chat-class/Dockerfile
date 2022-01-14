@@ -13,7 +13,7 @@ RUN npm install -g nx
 
 
 EXPOSE 3001
-EXPOSE 4001
+
 
 COPY . .
 
@@ -22,13 +22,3 @@ ARG node_env=dev
 ENV NODE_ENV $node_env
 
 CMD ["nx", "serve", "api-chat-class"]
-# RUN nx --version
-# RUN NODE_ENV=dev npx nx run-many --target=serve --projects=api-chat-class,bots-api-whatsapp --parallel=true
-# CMD ["npm", "run", "start:api-chat-class:dev"]
-# CMD ["npm", "run", "start:bots-api-whatsapp:dev"]
-# CMD [ "sh", "-c", "NODE_ENV=dev nx serve api-chat-class && NODE_ENV=dev nx serve bots-api-whatsapp" ]
-
-# CMD ["NODE_ENV=dev nx serve api-chat-class", "NODE_ENV=dev nx serve bots-api-whatsapp"]
-
-
-#  npx nx run-many --target=serve --projects=api-chat-class,bots-api-whatsapp --parallel=true
