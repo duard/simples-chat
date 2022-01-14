@@ -1,0 +1,50 @@
+version: '3.8'
+
+networks:
+  corp:
+    driver: bridge
+
+services:
+  nx-chatclass:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    # env_file:
+    #  - .env.dev .env.dev
+    environment:
+      NODE_ENV: dev
+      VAR_C: C
+      VAR_D: D
+    container_name: nx-chatclass
+    networks:
+      - corp
+    expose:
+      - '3001'
+      - '4001'
+    ports:
+      - '3001:3001'
+      - '4001:4001'
+
+    volumes:
+      - .:/app
+      # - ./app/node_modules
+# services:
+#   archetype-node-ms:
+#     build:
+#       context: ./apps/api-chat-class
+#       dockerfile: ./apps/api-chat-class/Dockerfile
+#       target: development
+#     volumes:
+#       - ./src:/app/src
+#     container_name: archetype-node-ms
+#     expose:
+#       - '3001'
+#     ports:
+#       - '3001:3001'
+#     networks:
+#       - cxaas-ecosystem-network
+# networks:
+#   cxaas-ecosystem-network:
+#     external: true
+#     name: cxaas-ecosystem-network

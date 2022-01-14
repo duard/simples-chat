@@ -12,8 +12,7 @@ RUN npm install
 RUN npm install -g nx
 
 
-EXPOSE 3001
-
+EXPOSE 4001
 
 COPY . .
 
@@ -21,4 +20,4 @@ COPY . .
 ARG node_env=dev
 ENV NODE_ENV $node_env
 
-CMD ["nx", "serve", "api-chat-class"]
+CMD ["nx", "serve", "bots-api-whatsapp"]

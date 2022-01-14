@@ -1,4 +1,4 @@
-import { join } from 'path'
+import { join } from 'path';
 
 export const configuration = () => ({
   port: parseInt(process.env.API_PORT || '3000', 10),
@@ -6,6 +6,9 @@ export const configuration = () => ({
   ambiente: process.env.AMBIENTE,
   jwtSecret: process.env.JWT_SECRET,
   envFile: process.env.ENV_FILE,
+  api_chatclass: {
+    port: parseInt(process.env.API_CHAT_CLASS_PORT || '3001', 10),
+  },
   bot_whatsapp: {
     port: parseInt(process.env.API_BOT_WHATSAPP_PORT || '3001', 10),
   },
@@ -32,4 +35,4 @@ export const configuration = () => ({
     autoLoadEntities: true,
     logging: false,
   },
-})
+});
