@@ -3,9 +3,9 @@ version: '3.8'
 services:
   # redis_db:
   #   image: "redis:alpine"
+  #   command: ["redis-server", "--bind", "redis", "--port", "6379"]
   #   ports:
   #     - 6379:6379
-
   #   extra_hosts:
   #       - "host.docker.internal:host-gateway"
   #   volumes:
@@ -14,22 +14,28 @@ services:
   #   environment:
   #     - REDIS_REPLICATION_MODE=master
 
-  redis_db:
-    image: redis
+  redis:
+    image: redis:latest
     ports:
       - 6379:6379
     extra_hosts:
         - "host.docker.internal:host-gateway"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
 
-  # redis-commander:
-  #   container_name: redis-commander
-  #   hostname: redis-commander
-  #   image: rediscommander/redis-commander:latest
-  #   restart: always
-  #   environment:
-  #   - REDIS_HOSTS=local:redis:6379
-  #   ports:
-  #   - "8887:8887"
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+      - HTTP_USER=root
+      - HTTP_PASSWORD=teste123
+    ports:
+      - 8082:8081
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
 
   nx-ms-greeting:
     build:
@@ -37,7 +43,7 @@ services:
       dockerfile: /home/duard/zdev/chatclass-org/apps/microservices/ms-greeting/Dockerfile
       target: development
     depends_on:
-      - redis_db
+      - redis
     environment:
       - REDIS_URL="redis://host.docker.internal:6379"
     ports:
@@ -49,7 +55,7 @@ services:
     expose:
       - "6379"
     links:
-      - redis_db
+      - redis
     restart: on-failure
     volumes:
       - .:/app
@@ -58,20 +64,19 @@ services:
     networks:
       - monorepo_net
 
-
   nx-bot-whatsapp:
     build:
       context: .
       dockerfile: /home/duard/zdev/chatclass-org/apps/bots/api-whatsapp/Dockerfile
       target: development
     depends_on:
-      - redis_db
+      - redis
     environment:
       - REDIS_URL="redis://host.docker.internal:6379"
     ports:
       - 4001:4001
     links:
-      - redis_db
+      - redis
     restart: on-failure
     volumes:
       - .:/app
@@ -87,7 +92,7 @@ services:
       target: development
     env_file: env.dev
     depends_on:
-      - redis_db
+      - redis
     environment:
       - REDIS_URL="redis://host.docker.internal:6379"
     ports:
@@ -96,7 +101,7 @@ services:
         - "host.docker.internal:host-gateway"
         - localhost:192.168.100.231
     links:
-      - redis_db
+      - redis
     restart: on-failure
     volumes:
       - .:/app
