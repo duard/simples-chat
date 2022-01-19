@@ -19,21 +19,38 @@ services:
       - node_modules:/usr/src/api-chat-class/node_modules/
     networks:
       - monorepo_net
-  nx-bot-whatsapp:
+  # nx-bot-whatsapp:
+  #   build:
+  #     context: .
+  #     dockerfile: /home/duard/zdev/chatclass-org/apps/bots/api-whatsapp/Dockerfile
+  #     target: development
+  #   environment:
+  #    - VAR_C=C
+  #    - VAR_D=D
+  #   ports:
+  #     - 4001:4001
+  #   restart: on-failure
+  #   volumes:
+  #     - .:/app
+  #     - api-bot-whatsapp_vol:/usr/src/bot-api-whatsapp/
+  #     - node_modules:/usr/src/bot-api-whatsapp/node_modules/
+  #   networks:
+  #     - monorepo_net
+  nx-ms-greeting:
     build:
       context: .
-      dockerfile: /home/duard/zdev/chatclass-org/apps/bots/api-whatsapp/Dockerfile
+      dockerfile: /home/duard/zdev/chatclass-org/apps/microservices/ms-greeting/Dockerfile
       target: development
     environment:
      - VAR_C=C
      - VAR_D=D
     ports:
-      - 4001:4001
+      - 5001:5001
     restart: on-failure
     volumes:
       - .:/app
-      - api-bot-whatsapp_vol:/usr/src/bot-api-whatsapp/
-      - node_modules:/usr/src/bot-api-whatsapp/node_modules/
+      - ms-ms-greeting_vol:/usr/src/ms-greeting/
+      - node_modules:/usr/src/ms-greeting/node_modules/
     networks:
       - monorepo_net
 
@@ -52,11 +69,10 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - 8888:8888
 
   redis:
-    image: redis:alpine
-    command: redis-server --appendonly yes
+    image: "redis:alpine"
     ports:
       - target: 6379
         published: 6380
@@ -68,11 +84,19 @@ services:
     environment:
       - REDIS_REPLICATION_MODE=master
 
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - 8887:8887
+    depends_on:
+        - redis
+
 volumes:
-  # ./usr/src/api-chat-class/:
-  # ./usr/src/bot-api-whatsapp/:
   api-chatclass_vol:
   api-bot-whatsapp_vol:
+  ms-ms-greeting_vol:
   node_modules:
   postgres_data:
   redis_data:
