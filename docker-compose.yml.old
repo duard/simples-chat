@@ -1,0 +1,112 @@
+
+version: '3.8'
+services:
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+  # redis-commander:
+  #   image: rediscommander/redis-commander:latest
+  #   environment:
+  #     - REDIS_HOSTS=local:redis:6379
+  #   ports:
+  #     - 8887:8887
+  #   depends_on:
+  #       - redis
+
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_DB: kiwi
+  #     POSTGRES_USER: _username_
+  #     POSTGRES_PASSWORD: _password_
+  #   volumes:
+  #     - postgres_data:/data
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8888:8888
+
+  nx-chatclass:
+    build:
+      context: .
+      dockerfile: /home/duard/zdev/chatclass-org/apps/api-chat-class/Dockerfile
+      target: development
+    env_file: env.dev
+    environment:
+     - VAR_C=C
+     - VAR_D=D
+    ports:
+      - 3001:3001
+    restart: on-failure
+    volumes:
+      - .:/api-chatclass
+      - api-chatclass_vol:/usr/src/api-chat-class/
+      - node_modules:/usr/src/node_modules/
+    networks:
+      - monorepo_net
+
+  # nx-bot-whatsapp:
+  #   build:
+  #     context: .
+  #     dockerfile: /home/duard/zdev/chatclass-org/apps/bots/api-whatsapp/Dockerfile
+  #     target: development
+  #   environment:
+  #    - VAR_C=C
+  #    - VAR_D=D
+  #   ports:
+  #     - 4001:4001
+  #   restart: on-failure
+  #   volumes:
+  #     - .:/bot-whatsapp
+  #     - api-bot-whatsapp_vol:/usr/src/bot-api-whatsapp/
+  #     - node_modules:/usr/src/node_modules/
+  #   networks:
+  #     - monorepo_net
+
+  nx-ms-greeting:
+    build:
+      context: .
+      dockerfile: /home/duard/zdev/chatclass-org/apps/microservices/ms-greeting/Dockerfile
+      target: development
+    depends_on:
+      - redis
+    environment:
+     - redis_server_addr: redis
+     - VAR_C=C
+     - VAR_D=D
+    ports:
+      - 5001:5001
+    restart: on-failure
+    volumes:
+      - .:/ms-greetings
+      - ms-ms-greeting_vol:/usr/src/ms-greeting/
+      - node_modules:/usr/src/node_modules/
+    networks:
+      - monorepo_net
+
+
+volumes:
+  api-chatclass_vol:
+  api-bot-whatsapp_vol:
+  ms-ms-greeting_vol:
+  node_modules:
+  postgres_data:
+  redis_data:
+
+networks:
+  monorepo_net:
+    driver: bridge
+

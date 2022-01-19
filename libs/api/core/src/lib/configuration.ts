@@ -7,9 +7,11 @@ export const configuration = () => ({
   jwtSecret: process.env.JWT_SECRET,
   envFile: process.env.ENV_FILE,
   api_chatclass: {
+    name: process.env.API_CHAT_CLASS_NAME,
     port: parseInt(process.env.API_CHAT_CLASS_PORT || '3001', 10),
   },
   bot_whatsapp: {
+    name: process.env.API_BOT_WHATSAPP_NAME,
     port: parseInt(process.env.API_BOT_WHATSAPP_PORT || '3001', 10),
   },
   database: {

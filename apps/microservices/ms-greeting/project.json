@@ -1,0 +1,52 @@
+{
+  "root": "apps/microservices/ms-greeting",
+  "sourceRoot": "apps/microservices/ms-greeting/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/microservices/ms-greeting",
+        "main": "apps/microservices/ms-greeting/src/main.ts",
+        "tsConfig": "apps/microservices/ms-greeting/tsconfig.app.json",
+        "assets": ["apps/microservices/ms-greeting/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/microservices/ms-greeting/src/environments/environment.ts",
+              "with": "apps/microservices/ms-greeting/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "microservices-ms-greeting:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/microservices/ms-greeting/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/microservices/ms-greeting"],
+      "options": {
+        "jestConfig": "apps/microservices/ms-greeting/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
