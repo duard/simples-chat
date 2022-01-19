@@ -1,13 +1,10 @@
-import { ApiCoreModule } from '@chatclass-org/api/core';
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
   imports: [
-    ApiCoreModule,
     ClientsModule.register([
       {
         name: 'GREETING_SERVICE',

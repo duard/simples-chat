@@ -3,6 +3,7 @@
   "projects": {
     "api-chat-class": "apps/api-chat-class",
     "api-core": "libs/api/core",
-    "bots-api-whatsapp": "apps/bots/api-whatsapp"
+    "bots-api-whatsapp": "apps/bots/api-whatsapp",
+    "microservices-ms-greeting": "apps/microservices/ms-greeting"
   }
 }

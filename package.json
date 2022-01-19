@@ -6,7 +6,7 @@
     "start:nx:dev": "NODE_ENV=dev npx nx run-many --target=serve --projects=api-chat-class,bots-api-whatsapp --parallel=true",
     "start:api-chat-class:dev": "NODE_ENV=dev nx serve api-chat-class",
     "start:bots-api-whatsapp:dev": "NODE_ENV=dev nx serve bots-api-whatsapp",
-    "start:dev": "docker-compose -f docker-compose.local.yml up -d && nest start --watch",
+    "start:dev": "docker-compose up --build",
     "build": "nx build",
     "test": "nx test"
   },
@@ -23,6 +23,7 @@
     "@nrwl/nx-cloud": "latest",
     "@nrwl/tao": "13.4.4",
     "@nrwl/workspace": "13.4.4",
+    "@types/ioredis": "^4.28.7",
     "@types/jest": "27.0.2",
     "@types/node": "14.14.33",
     "@typescript-eslint/eslint-plugin": "~5.3.0",
@@ -30,18 +31,23 @@
     "eslint": "8.2.0",
     "eslint-config-prettier": "8.1.0",
     "jest": "27.2.3",
+    "mongodb": "^3.6.6",
+    "mongoose": "^6.0.8",
     "prettier": "^2.3.1",
     "ts-jest": "27.0.5",
-    "typescript": "~4.4.3",
-    "mongodb": "^3.6.6",
-    "mongoose": "^6.0.8"
+    "typescript": "~4.4.3"
   },
   "dependencies": {
+    "@nestjs-modules/ioredis": "^1.0.0",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.1.6",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/microservices": "^8.2.5",
     "@nestjs/platform-express": "^8.0.0",
+    "ioredis": "^4.28.3",
     "nestjs-config": "^1.4.10",
+    "nestjs-redis": "^1.3.3",
+    "redis": "^3.1.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
     "tslib": "^2.0.0"
