@@ -5,6 +5,7 @@ import { ClientProxy } from '@nestjs/microservices';
 export class AppService {
   constructor(@Inject('GREETING_SERVICE') private client: ClientProxy) {}
   getData(): { message: string } {
+    this.client.emit('book-created', {'bookName': 'The Code', 'author': 'Carlos Aquino'});
     return { message: '!!! Welcome to api-chat-class!' };
   }
 
@@ -13,7 +14,7 @@ export class AppService {
   }
 
   async getHello() {
-    return this.client.send({ cmd: 'greeting' }, 'Progressive Coder');
+    return this.client.send({ cmd: 'greeting' }, 'Progressive Coder from api-chat-class');
   }
 
   async getHelloAsync() {
