@@ -6,7 +6,7 @@
     "start:nx:dev": "NODE_ENV=dev npx nx run-many --target=serve --projects=api-chat-class,bots-api-whatsapp --parallel=true",
     "start:api-chat-class:dev": "NODE_ENV=dev nx serve api-chat-class",
     "start:bots-api-whatsapp:dev": "NODE_ENV=dev nx serve bots-api-whatsapp",
-    "start:dev": "docker-compose up --build",
+    "start:dev": "docker-compose up",
     "build": "nx build",
     "test": "nx test"
   },
@@ -38,6 +38,7 @@
     "typescript": "~4.4.3"
   },
   "dependencies": {
+    "@liaoliaots/nestjs-redis": "^5.2.0",
     "@nestjs-modules/ioredis": "^1.0.0",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.1.6",

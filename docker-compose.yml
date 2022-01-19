@@ -58,6 +58,28 @@ services:
     networks:
       - monorepo_net
 
+
+  nx-bot-whatsapp:
+    build:
+      context: .
+      dockerfile: /home/duard/zdev/chatclass-org/apps/bots/api-whatsapp/Dockerfile
+      target: development
+    depends_on:
+      - redis_db
+    environment:
+      - REDIS_URL="redis://host.docker.internal:6379"
+    ports:
+      - 4001:4001
+    links:
+      - redis_db
+    restart: on-failure
+    volumes:
+      - .:/app
+      - api-bot-whatsapp_vol:/usr/src/bot-api-whatsapp/
+      - node_modules:/usr/src/node_modules/
+    networks:
+      - monorepo_net
+
   nx-chatclass:
     build:
       context: .
@@ -73,7 +95,6 @@ services:
     extra_hosts:
         - "host.docker.internal:host-gateway"
         - localhost:192.168.100.231
-
     links:
       - redis_db
     restart: on-failure
