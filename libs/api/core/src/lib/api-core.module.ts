@@ -16,7 +16,7 @@ const ENV = process.env['NODE' + '_ENV'];
     }),
     // RedisModule.forRoot({
     //   config: {
-    //     url: 'redis://localhost:6380',
+    //     url: 'redis://localhost:6379',
     //   },
     // }),
   ],

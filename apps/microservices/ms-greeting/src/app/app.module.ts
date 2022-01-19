@@ -8,7 +8,7 @@ import { AppService } from './app.service';
     ClientsModule.register([
       {name: 'GREETING_SERVICE',transport: Transport.REDIS,
       options : {
-        url: 'redis://localhost:6380',
+        url: 'redis://localhost:6379',
       }
     }
     ])

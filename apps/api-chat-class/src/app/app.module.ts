@@ -1,5 +1,5 @@
 import { ApiCoreModule } from '@chatclass-org/api/core';
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 import { AppController } from './app.controller';
@@ -22,7 +22,5 @@ import { AppService } from './app.service';
   providers: [AppService],
 })
 export class AppModule {
-  constructor() {
-    Logger.log(process.env.APPLICATION_NAME, 'Application =>');
-  }
+
 }

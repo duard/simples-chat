@@ -1,26 +1,13 @@
 FROM node:13-alpine as development
-
-WORKDIR /app
-
+WORKDIR app
 COPY package.json package-lock.json ./
-# COPY .npmrc ./
 COPY .env.dev ./
-# COPY tsconfig.build.json ./
-# COPY tsconfig.json ./
-
 RUN npm install
 RUN npm install -g nx
-
-
-EXPOSE 5001
-
-COPY . .
-
-# Set the Node environment
 ARG node_env=dev
 ENV NODE_ENV $node_env
-
+EXPOSE 5001
+EXPOSE 4001
+COPY . .
 CMD ["nx", "serve", "bots-api-whatsapp"]
-
-
 #  && nest start --watch

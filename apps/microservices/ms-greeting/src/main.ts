@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
@@ -9,10 +10,12 @@ async function bootstrap() {
     {
       transport: Transport.REDIS,
       options: {
-        url: 'redis://localhost:6380',
+        url: 'redis://localhost:6379',
       },
     }
   );
+
   await app.listen();
+  Logger.log(`🚀 Microservice GREETING is running`);
 }
 bootstrap();
