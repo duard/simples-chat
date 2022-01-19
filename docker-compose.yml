@@ -2,22 +2,34 @@
 version: '3.8'
 services:
   redis_db:
-    image: redis
-    # only needed to directly access Redis from host
+    image: "redis:alpine"
     ports:
       - 6379:6379
-  # redis-commander:
-  #   container_name: redis-commander
-  #   hostname: redis-commander
-  #   image: rediscommander/redis-commander:latest
-  #   restart: always
-  #   environment:
-  #   - REDIS_HOSTS=local:redis:6379
-  #   ports:
-  #   - "8887:8887"
+
     extra_hosts:
         - "host.docker.internal:host-gateway"
-        - localhost:192.168.100.231
+    volumes:
+      - redis_data:/data
+    restart: always
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+  # redis_db:
+  #   image: redis
+  #   ports:
+  #     - 6379:6379
+  #   extra_hosts:
+  #       - "host.docker.internal:host-gateway"
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+    - REDIS_HOSTS=local:redis:6379
+    ports:
+    - "8887:8887"
 
   nx-ms-greeting:
     build:
