@@ -13,7 +13,7 @@ import { AppService } from './app.service';
         name: 'GREETING_SERVICE',
         transport: Transport.REDIS,
         options: {
-          url: 'redis://localhost:6379',
+          url: 'redis://host.docker.internal:6379',
         },
       },
     ]),
@@ -21,6 +21,4 @@ import { AppService } from './app.service';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-
-}
+export class AppModule {}

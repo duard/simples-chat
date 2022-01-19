@@ -1,22 +1,11 @@
 
 version: '3.8'
 services:
-  redis:
-    container_name: redis
+  redis_db:
     image: redis
-    hostname: redis
-    command: ["redis-server", "--appendonly", "yes"]
+    # only needed to directly access Redis from host
     ports:
-      - target: 6379
-        published: 6379
-        protocol: tcp
-        mode: host
-    expose:
-      - "6379"
-    volumes:
-      - redis_data:/data
-    restart: always
-
+      - 6379:6379
   # redis-commander:
   #   container_name: redis-commander
   #   hostname: redis-commander
@@ -26,6 +15,9 @@ services:
   #   - REDIS_HOSTS=local:redis:6379
   #   ports:
   #   - "8887:8887"
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+        - localhost:192.168.100.231
 
   nx-ms-greeting:
     build:
@@ -33,15 +25,19 @@ services:
       dockerfile: /home/duard/zdev/chatclass-org/apps/microservices/ms-greeting/Dockerfile
       target: development
     depends_on:
-      - redis
+      - redis_db
     environment:
-     redis_server_addr: redis
+      - REDIS_URL="redis://host.docker.internal:6379"
     ports:
       - 5001:5001
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+        - localhost:192.168.100.231
+
     expose:
       - "6379"
     links:
-      - redis
+      - redis_db
     restart: on-failure
     volumes:
       - .:/app
@@ -50,27 +46,31 @@ services:
     networks:
       - monorepo_net
 
-  # nx-chatclass:
-  #   build:
-  #     context: .
-  #     dockerfile: /home/duard/zdev/chatclass-org/apps/api-chat-class/Dockerfile
-  #     target: development
-  #   env_file: env.dev
-  #   depends_on:
-  #     - redis
-  #   environment:
-  #    redis_server_addr: redis
-  #   ports:
-  #     - 3001:3001
-  #   links:
-  #     - redis
-  #   restart: on-failure
-  #   volumes:
-  #     - .:/app
-  #     - api-chatclass_vol:/usr/src/api-chat-class/
-  #     - node_modules:/usr/src/node_modules/
-  #   networks:
-  #     - monorepo_net
+  nx-chatclass:
+    build:
+      context: .
+      dockerfile: /home/duard/zdev/chatclass-org/apps/api-chat-class/Dockerfile
+      target: development
+    env_file: env.dev
+    depends_on:
+      - redis_db
+    environment:
+      - REDIS_URL="redis://host.docker.internal:6379"
+    ports:
+      - 3001:3001
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+        - localhost:192.168.100.231
+
+    links:
+      - redis_db
+    restart: on-failure
+    volumes:
+      - .:/app
+      - api-chatclass_vol:/usr/src/api-chat-class/
+      - node_modules:/usr/src/node_modules/
+    networks:
+      - monorepo_net
 
 volumes:
   api-chatclass_vol:

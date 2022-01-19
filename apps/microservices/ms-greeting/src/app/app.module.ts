@@ -6,12 +6,14 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     ClientsModule.register([
-      {name: 'GREETING_SERVICE',transport: Transport.REDIS,
-      options : {
-        url: 'redis://localhost:6379',
-      }
-    }
-    ])
+      {
+        name: 'GREETING_SERVICE',
+        transport: Transport.REDIS,
+        options: {
+          url: 'redis://host.docker.internal:6379',
+        },
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [AppService],

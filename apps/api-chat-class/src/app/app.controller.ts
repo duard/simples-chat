@@ -8,7 +8,7 @@ export class AppController {
 
   @Get()
   getData() {
-    return this.appService.getHello();
+    return this.appService.getData();
   }
 
   @Post('sendMsg')
