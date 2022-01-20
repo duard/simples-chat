@@ -12,7 +12,11 @@ export const configuration = () => ({
   },
   bot_whatsapp: {
     name: process.env.API_BOT_WHATSAPP_NAME,
-    port: parseInt(process.env.API_BOT_WHATSAPP_PORT || '3001', 10),
+    port: parseInt(process.env.API_BOT_WHATSAPP_PORT || '3002', 10),
+  },
+  bot_telegram: {
+    name: process.env.API_BOT_TELEGRAM_NAME,
+    port: parseInt(process.env.API_BOT_TELEGRAM_PORT || '3003', 10),
   },
   database: {
     type: process.env.API_TYPEORM_TYPE || 'mysql',

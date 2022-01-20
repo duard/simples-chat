@@ -51,7 +51,6 @@ services:
     extra_hosts:
         - "host.docker.internal:host-gateway"
         - localhost:192.168.100.231
-
     expose:
       - "6379"
     links:
@@ -85,6 +84,27 @@ services:
     networks:
       - monorepo_net
 
+  nx-bot-telegram:
+    build:
+      context: .
+      dockerfile: /home/duard/zdev/chatclass-org/apps/bots/api-telegram/Dockerfile
+      target: development
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL="redis://host.docker.internal:6379"
+    ports:
+      - 6001:6001
+    links:
+      - redis
+    restart: on-failure
+    volumes:
+      - .:/app
+      - api-bot-telegram_vol:/usr/src/bot-api-telegram/
+      - node_modules:/usr/src/node_modules/
+    networks:
+      - monorepo_net
+
   nx-chatclass:
     build:
       context: .
@@ -113,6 +133,7 @@ services:
 volumes:
   api-chatclass_vol:
   api-bot-whatsapp_vol:
+  api-bot-telegram_vol:
   ms-ms-greeting_vol:
   node_modules:
   postgres_data:

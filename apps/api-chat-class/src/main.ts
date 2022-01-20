@@ -14,7 +14,7 @@ async function bootstrap() {
   const port = config.get('api_chatclass.port') || 3333;
   await app.listen(port);
   Logger.log(
-    `🚀 Application is running on [${config.get(
+    `🚀 ${config.get('api_chatclass.name')} is running on [${config.get(
       'NODE_ENV'
     )}] : http://localhost:${port}/${globalPrefix}`
   );
