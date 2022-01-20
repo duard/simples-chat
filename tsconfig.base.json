@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@chatclass-org/api/core": ["libs/api/core/src/index.ts"]
+      "@chatclass-org/api/core": ["libs/api/core/src/index.ts"],
+      "@chatclass-org/api/share": ["libs/api/share/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"],
