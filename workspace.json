@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "simples-api": "apis/simples-api",
     "api-chat-class": "apps/api-chat-class",
     "api-core": "libs/api/core",
     "api-share": "libs/api/share",

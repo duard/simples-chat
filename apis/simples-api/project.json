@@ -1,0 +1,52 @@
+{
+  "root": "apis/simples-api",
+  "sourceRoot": "apis/simples-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apis/simples-api",
+        "main": "apis/simples-api/src/main.ts",
+        "tsConfig": "apis/simples-api/tsconfig.app.json",
+        "assets": ["apis/simples-api/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apis/simples-api/src/environments/environment.ts",
+              "with": "apis/simples-api/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "simples-api:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apis/simples-api/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apis/simples-api"],
+      "options": {
+        "jestConfig": "apis/simples-api/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

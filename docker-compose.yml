@@ -130,7 +130,34 @@ services:
     networks:
       - monorepo_net
 
+  simples-api:
+    build:
+      context: .
+      dockerfile: /home/duard/zdev/chatclass-org/apis/simples-api/Dockerfile
+      target: development
+    env_file: env.dev
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL="redis://host.docker.internal:6379"
+    ports:
+      - 7001:7001
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+        - localhost:192.168.100.231
+    links:
+      - redis
+    restart: on-failure
+    volumes:
+      - .:/app
+      - simples-api_vol:/usr/src/simples-api/
+      - node_modules:/usr/src/node_modules/
+    networks:
+      - monorepo_net
+
+
 volumes:
+  simples-api_vol:
   api-chatclass_vol:
   api-bot-whatsapp_vol:
   api-bot-telegram_vol:
