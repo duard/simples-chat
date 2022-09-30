@@ -40,7 +40,7 @@ services:
   nx-ms-greeting:
     build:
       context: .
-      dockerfile: /home/duard/zdev/chatclass-org/apps/microservices/ms-greeting/Dockerfile
+      dockerfile: apps/microservices/ms-greeting/Dockerfile
       target: development
     depends_on:
       - redis
@@ -66,7 +66,7 @@ services:
   nx-bot-whatsapp:
     build:
       context: .
-      dockerfile: /home/duard/zdev/chatclass-org/apps/bots/api-whatsapp/Dockerfile
+      dockerfile: apps/bots/api-whatsapp/Dockerfile
       target: development
     depends_on:
       - redis
@@ -87,7 +87,7 @@ services:
   nx-bot-telegram:
     build:
       context: .
-      dockerfile: /home/duard/zdev/chatclass-org/apps/bots/api-telegram/Dockerfile
+      dockerfile: apps/bots/api-telegram/Dockerfile
       target: development
     depends_on:
       - redis
@@ -108,7 +108,7 @@ services:
   nx-chatclass:
     build:
       context: .
-      dockerfile: /home/duard/zdev/chatclass-org/apps/api-chat-class/Dockerfile
+      dockerfile: apps/api-chat-class/Dockerfile
       target: development
     env_file: env.dev
     depends_on:
